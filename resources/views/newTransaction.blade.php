@@ -47,14 +47,5 @@
         </div>
     </div>
 
-    <div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-
-            <a href="/logout" onclick="event.preventDefault(); this.closest('form').submit();">
-                {{ __('Log Out') }}
-            </a>
-        </form>
-    </div>
 </x-app-layout>
 

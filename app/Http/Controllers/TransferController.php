@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use App\Models\Transfer;
 use App\Models\User;
 use App\Rules\ValidateAmount;
+use App\Rules\ValidateNameOrSurname;
 use App\Rules\ValidateReceiver;
 use App\Rules\ValidateUserExists;
 use Carbon\Carbon;
@@ -41,12 +42,12 @@ class TransferController extends Controller
                 'required',
                 'string',
                 'max:255',
-                new ValidateReceiver($request->account_number)],
+                new ValidateNameOrSurname($request->account_number)],
             'surname' => [
                 'required',
                 'string',
                 'max:255',
-                new ValidateReceiver($request->account_number)],
+                new ValidateNameOrSurname($request->account_number)],
             'account_number' => [
                 'required',
                 'string',

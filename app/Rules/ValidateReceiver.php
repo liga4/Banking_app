@@ -24,6 +24,6 @@ class ValidateReceiver implements Rule
 
     public function message()
     {
-        return 'You can send money to your own account.';
+        return 'You cant send money to your own account.';
     }
 }

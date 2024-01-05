@@ -43,15 +43,17 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button onclick="window.location.href = '{{ route('register') }}' ">
-                    {{ __('Register') }}
-                </x-button>
 
+            <div>
                 <x-button class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
             </div>
         </form>
+        <div class="flex items-center justify-end mt-4">
+            <x-button onclick="window.location.href = '{{ route('register') }}' ">
+                {{ __('Register') }}
+            </x-button>
+        </div>
     </x-auth-card>
 </x-guest-layout>

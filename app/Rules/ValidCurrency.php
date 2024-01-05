@@ -1,14 +1,15 @@
 <?php
+
 namespace App\Rules;
 
+use App\Models\CryptoExchangeRates;
 use Illuminate\Contracts\Validation\Rule;
-use App\Models\CurrencyExchangeRates;
 
 class ValidCurrency implements Rule
 {
     public function passes($attribute, $value)
     {
-        return CurrencyExchangeRates::where('currency', $value)->exists();
+        return CryptoExchangeRates::where('currency', $value)->exists();
     }
 
     public function message()

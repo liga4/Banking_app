@@ -1,10 +1,9 @@
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-{{ __( 'Your Investment Account' ) }}
-</h2>
-</x-slot>
+            {{ __( 'Your Investment Account' ) }}
+        </h2>
+    </x-slot>
     <div class="flex justify-center">
         @foreach ($currencies as $currency)
             <div class="m-4">
@@ -15,7 +14,8 @@
                     <tr>
                         <td colspan="2" class="p-2 text-center">
                             <div class="flex justify-center">
-                                <img src="{{ $currency['logo'] }}" alt="{{ $currency['name'] }} Logo" width="200" height="200">
+                                <img src="{{ $currency['logo'] }}" alt="{{ $currency['name'] }} Logo" width="200"
+                                     height="200">
                             </div>
                         </td>
                     </tr>
@@ -62,20 +62,27 @@
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($transactionDetails as $transaction)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction['currency'] }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction['amount'] }}</td>
-                                @if($transaction['percentage'][0] == '+')
-                                <td class="px-6 py-4 whitespace-nowrap" style="color: green">{{ $transaction['percentage'] }}</td>
-                                @else
-                                    <td class="px-6 py-4 whitespace-nowrap" style="color: red">{{ $transaction['percentage'] }}</td>
-                                @endif
-                            </tr>
-                        @endforeach
+                        @if(isset($transactionDetails))
+                            @foreach($transactionDetails as $transaction)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $transaction['currency'] }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $transaction['amount'] }}</td>
+                                    @if($transaction['percentage'] == '0.00%')
+                                        <td class="px-6 py-4 whitespace-nowrap"> {{ $transaction['percentage'] }}</td>
+                                    @elseif($transaction['percentage'][0] !== '-')
+                                        <td class="px-6 py-4 whitespace-nowrap" style="color: green">
+                                            +{{ $transaction['percentage'] }}</td>
+                                    @else
+                                        <td class="px-6 py-4 whitespace-nowrap"
+                                            style="color: red">{{ $transaction['percentage'] }}</td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div></x-app-layout>
+    </div>
+</x-app-layout>

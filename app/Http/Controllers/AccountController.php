@@ -51,9 +51,9 @@ class AccountController extends Controller
         ];
         $currencies = [
             ['name' => 'BTC', 'exchangeRate' => CryptoExchangeRates::find('BTC')->exchange_rate, 'logo' => $logo['BTC']],
-            ['name' => 'ETH','exchangeRate' => CryptoExchangeRates::find('ETH')->exchange_rate, 'logo' => $logo['ETH']],
-            ['name' => 'USDT','exchangeRate' => CryptoExchangeRates::find('USDT')->exchange_rate, 'logo' => $logo['USDT']],
-            ['name' => 'SOL','exchangeRate' => CryptoExchangeRates::find('SOL')->exchange_rate, 'logo' => $logo['SOL']]
+            ['name' => 'ETH', 'exchangeRate' => CryptoExchangeRates::find('ETH')->exchange_rate, 'logo' => $logo['ETH']],
+            ['name' => 'USDT', 'exchangeRate' => CryptoExchangeRates::find('USDT')->exchange_rate, 'logo' => $logo['USDT']],
+            ['name' => 'SOL', 'exchangeRate' => CryptoExchangeRates::find('SOL')->exchange_rate, 'logo' => $logo['SOL']]
         ];
 
         return view('investmentAccount.investmentAccount', [
@@ -61,18 +61,4 @@ class AccountController extends Controller
         ]);
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }

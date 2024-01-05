@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Transaction extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     protected $fillable = [
@@ -19,17 +20,20 @@ class Transaction extends Model
         'category',
         'date'
     ];
-    public function owner() :BelongsTo
+
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
     public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class, 'account_id');
     }
+
     public function delete()
     {
-CurrencyExchangeRates::whereIn('id', [174, 175, 176
-])->delete();
+        CurrencyExchangeRates::whereIn('id', [174, 175, 176
+        ])->delete();
     }
 }

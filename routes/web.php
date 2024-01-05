@@ -27,4 +27,4 @@ Route::get('/investmentAccount', [CryptoExchangeRatesController::class, 'showInv
 
 Route::get('/buyCrypto', [CryptoTransactionController::class, 'create'])->name('buyCrypto');
 Route::post('/buyCrypto', [CryptoTransactionController::class, 'store']);
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

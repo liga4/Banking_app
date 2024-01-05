@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Account;
+use App\Models\CryptoExchangeRates;
 use App\Models\CurrencyExchangeRates;
 use App\Models\Transaction;
 use App\Models\Transfer;
 use App\Models\User;
 use App\Rules\ValidateAmount;
 use App\Rules\ValidateReceiver;
+use App\Rules\ValidateUserExists;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -35,11 +37,31 @@ class TransferController extends Controller
         $senderAccount = auth()->user()['accounts']->first();
         $balance = $senderAccount->balance / 100;
         $request->validate([
-            'name' => ['required', 'string', 'max:255', new ValidateReceiver($request->account_number)],
-            'surname' => ['required', 'string', 'max:255', new ValidateReceiver($request->account_number)],
-            'account_number' => ['required', 'string', 'max:255', new ValidateReceiver($senderAccount->account_number)],
-            'amount' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', new ValidateAmount($balance)],
-            'reference' => ['required', 'string', 'max:255'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                new ValidateReceiver($request->account_number)],
+            'surname' => [
+                'required',
+                'string',
+                'max:255',
+                new ValidateReceiver($request->account_number)],
+            'account_number' => [
+                'required',
+                'string',
+                'max:255',
+                new ValidateReceiver($senderAccount->account_number),
+                new ValidateUserExists()],
+            'amount' => [
+                'required',
+                'numeric',
+                'regex:/^\d+(\.\d{1,2})?$/',
+                new ValidateAmount($balance)],
+            'reference' => [
+                'required',
+                'string',
+                'max:255'],
 
         ]);
         $senderAccount = auth()->user()['accounts']->first();
@@ -51,8 +73,8 @@ class TransferController extends Controller
             return redirect()->back()->with('error', 'Not enough money.');
         }
 
-        $senderCurrency = CurrencyExchangeRates::where('currency', $senderAccount->currency)->first();
-        $receiverCurrency = CurrencyExchangeRates::where('currency', $receiver->currency)->first();
+        $senderCurrency = CryptoExchangeRates::where('currency', $senderAccount->currency)->first();
+        $receiverCurrency = CryptoExchangeRates::where('currency', $receiver->currency)->first();
 
         $amount = $request->amount * 100;
 

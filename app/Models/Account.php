@@ -21,7 +21,8 @@ class Account extends Model
         'currency',
         'account_type'
     ];
-    public function owner():BelongsTo
+
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

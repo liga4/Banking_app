@@ -18,7 +18,14 @@ class CryptoExchangeRatesController extends Controller
         if ($response->successful()) {
             foreach ($response['data']['rates'] as $currency => $rate) {
                 $existingCurrencies = CryptoExchangeRates::where('currency', $currency)->first();
-                $existingCurrencies->update(['exchange_rate' => $rate]);
+                if ($existingCurrencies) {
+                    $existingCurrencies->update(['exchange_rate' => $rate]);
+                } else {
+                    CryptoExchangeRates::create([
+                        'currency' => $currency,
+                        'exchange_rate' => $rate,
+                    ]);
+                }
             }
             return "Success";
         } else {
@@ -42,20 +49,23 @@ class CryptoExchangeRatesController extends Controller
         ];
         $userId = auth()->user()['id'];
         $transactions = CryptoTransactions::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
+        $transactionDetails = [];
 
-        foreach ($transactions as $transaction) {
-            $currency = $transaction->currency;
-            $amount = $transaction->amount;
-            $currentExchangeRate = CryptoExchangeRates::find($currency);
-            if ($currentExchangeRate > $transaction->buying_price) {
-                $percentageChange = (($currentExchangeRate->exchange_rate - $transaction->buying_price) / $transaction->buying_price) * 100;
-                $percentage = '+' .number_format($percentageChange, 2) . '%';
-            } else {
-                $percentageChange = (($currentExchangeRate->exchange_rate - $transaction->buying_price) / $transaction->buying_price) * 100;
-                $percentage = '-' .number_format($percentageChange, 2) . '%';
+        if ($transactions->count() > 0) {
+            foreach ($transactions as $transaction) {
+                $currency = $transaction->currency;
+                $amount = $transaction->amount;
+                $currentExchangeRate = CryptoExchangeRates::find($currency);
+                if ($currentExchangeRate > $transaction->buying_price) {
+                    $percentageChange = (($currentExchangeRate->exchange_rate - $transaction->buying_price) / $transaction->buying_price) * 100;
+                    $percentage = number_format($percentageChange, 2) . '%';
+                } else {
+                    $percentageChange = (($currentExchangeRate->exchange_rate - $transaction->buying_price) / $transaction->buying_price) * 100;
+                    $percentage = number_format($percentageChange, 2) . '%';
+                }
+                $transactionDetails[] = ['currency' => $currency, 'amount' => $amount, 'percentage' => $percentage];
+
             }
-            $transactionDetails[] = ['currency' => $currency, 'amount' => $amount, 'percentage' => $percentage];
-
         }
         return view('investmentAccount.investmentAccount', [
             'currencies' => $currencies,

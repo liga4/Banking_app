@@ -36,7 +36,7 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($transactions as $transaction)
-                            <tr >
+                            <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $otherUser[$transaction->id]->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $otherUser[$transaction->id]->surname }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $accountNumber[$transaction->id] }}</td>
@@ -51,16 +51,16 @@
                                 @endif
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->date }}</td>
                                 <td>
-                                <form action="{{ route('newTransaction') }}"
-                                      method="GET"
-                                      style="background-color: lightsteelblue; color: #fff;">
-                                    <button type='submit'
-                                            name="transaction_id"
-                                            value="{{ $transaction->id }}"
-                                            class="bg-blue-300 text-gray-700 font-bold py-2 px-4 ">
-                                        New Transaction
-                                    </button>
-                                </form>
+                                    <form action="{{ route('newTransaction') }}"
+                                          method="GET"
+                                          style="background-color: lightsteelblue; color: #fff;">
+                                        <button type='submit'
+                                                name="transaction_id"
+                                                value="{{ $transaction->id }}"
+                                                class="bg-blue-300 text-gray-700 font-bold py-2 px-4 ">
+                                            New Transaction
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

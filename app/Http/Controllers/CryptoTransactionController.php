@@ -28,6 +28,7 @@ class CryptoTransactionController extends Controller
             'logo' => $logo
         ]);
     }
+
     public function store(Request $request)
     {
         $currency = CryptoExchangeRates::find($request->input('name'));

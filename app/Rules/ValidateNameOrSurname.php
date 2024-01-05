@@ -19,7 +19,7 @@ class ValidateNameOrSurname implements Rule
     public function passes($attribute, $value)
     {
         $account = Account::where('account_number', $this->accountNumber)->first();
-        if($attribute == 'name'){
+        if ($attribute == 'name') {
             $user = User::find($account->user_id);
             $name = $user->name;
             return $value == $name;
@@ -29,6 +29,7 @@ class ValidateNameOrSurname implements Rule
             return $value == $surname;
         }
     }
+
     public function message()
     {
         return 'Name or Surname does not match account number.';

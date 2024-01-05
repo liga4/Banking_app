@@ -27,8 +27,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Account::class, 'account_id');
     }
-//    public function delete()
-//    {
-//        Transaction::whereIn('id', [46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60])->delete();
-//    }
+    public function delete()
+    {
+CurrencyExchangeRates::whereIn('id', [174, 175, 176
+])->delete();
+    }
 }

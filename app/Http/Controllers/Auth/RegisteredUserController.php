@@ -39,11 +39,10 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password)
         ]);
         $accountNumber = $this->generateAccountNumber();
-        $defaultAccountType = 'Checking_account';
         $account = new Account([
             'currency' => $request->currency,
             'account_number' => $accountNumber,
-            'account_type' => $defaultAccountType
+            'account_type' => 'Checking_account'
         ]);
         event(new Registered($user));
         $user->accounts()->save($account);

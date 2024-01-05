@@ -7,32 +7,37 @@ use App\Models\Account;
 use App\Models\CurrencyExchangeRates;
 use App\Models\Transaction;
 use App\Models\Transfer;
+use App\Models\User;
 use App\Rules\ValidateAmount;
+use App\Rules\ValidateReceiver;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TransferController extends Controller
 {
-
-    public function index()
+    public function create(Request $request)
     {
+        $transactionId = $request->input('transaction_id');
+        $transaction = $transactionId ? Transaction::find($transactionId) : null;
+        $account = $transactionId ? Account::find($transaction->account_id) : null;
+        $user = $transactionId ? User::find($account->user_id) : null;
 
-    }
-
-
-    public function create()
-    {
-        return view('newTransaction');
+        return view('newTransaction', [
+            'oldTransaction' => $transaction,
+            'oldAccount' => $account,
+            'oldUser' => $user
+        ]);
     }
 
     public function store(Request $request)
     {
+
         $senderAccount = auth()->user()['accounts']->first();
         $balance = $senderAccount->balance / 100;
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
-            'account_number' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', new ValidateReceiver($request->account_number)],
+            'surname' => ['required', 'string', 'max:255', new ValidateReceiver($request->account_number)],
+            'account_number' => ['required', 'string', 'max:255', new ValidateReceiver($senderAccount->account_number)],
             'amount' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', new ValidateAmount($balance)],
             'reference' => ['required', 'string', 'max:255'],
 
@@ -40,15 +45,12 @@ class TransferController extends Controller
         $senderAccount = auth()->user()['accounts']->first();
         $receiver = Account::where('account_number', $request->account_number)->first();
 
-        if (!$receiver) {
-            return redirect()->back()->with('error', 'Receiver account not found.');
-        }
         $senderAccountId = auth()->user()->accounts()->value('id');
 
         if ($senderAccount->balance < $request->amount) {
             return redirect()->back()->with('error', 'Not enough money.');
         }
-//(($this->amount / $this->currencyForExchange) * $this->currencyToWhichExchange)
+
         $senderCurrency = CurrencyExchangeRates::where('currency', $senderAccount->currency)->first();
         $receiverCurrency = CurrencyExchangeRates::where('currency', $receiver->currency)->first();
 
@@ -71,8 +73,10 @@ class TransferController extends Controller
             'category' => 'outgoing',
             'date' => Carbon::now()
         ]);
+
         //for receiver
         $convertedAmount = $amount / $senderCurrency->exchange_rate * $receiverCurrency->exchange_rate;
+
         Transaction::create([
             'reference' => $request->reference,
             'user_id' => $receiver->user_id,
@@ -90,27 +94,5 @@ class TransferController extends Controller
         $receiver->update(['balance' => $newReceiversBalance]);
 
         return redirect('transactions');
-    }
-
-
-    public function show(Transfer $transfer)
-    {
-        //
-    }
-
-
-    public function edit(Transfer $transfer)
-    {
-        //
-    }
-
-    public function update(Request $request, Transfer $transfer)
-    {
-        //
-    }
-
-    public function destroy(Transfer $transfer)
-    {
-        //
     }
 }

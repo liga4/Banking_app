@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CurrencyExchangeRates extends Model
+class CryptoTransactions extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'currency';
     protected $fillable = [
+        'user_id',
+        'account_id',
         'currency',
-        'exchange_rate'
+        'amount',
+        'buying_price',
+        'category',
+        'boughtFor'
     ];
 }

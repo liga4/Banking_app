@@ -11,21 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
-
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-    }
-
     public function show()
     {
         $userId = Auth::id();
@@ -36,8 +21,8 @@ class TransactionController extends Controller
 
         foreach ($transactions as $transaction) {
             $account = Account::where('id', $transaction->account_id)->first();
-            $otherUser [$transaction->id]= User::where('id', $account->user_id)->first();
-            $accountNumber [$transaction->id]= $account->account_number;
+            $otherUser [$transaction->id] = User::where('id', $account->user_id)->first();
+            $accountNumber [$transaction->id] = $account->account_number;
             $account = auth()->user()['accounts']->first();
 
         }
@@ -47,20 +32,5 @@ class TransactionController extends Controller
             'accountNumber' => $accountNumber,
             'account' => $account
         ]);
-    }
-
-    public function edit(Transaction $transaction)
-    {
-        //
-    }
-
-    public function update(Request $request, Transaction $transaction)
-    {
-        //
-    }
-
-    public function destroy(Transaction $transaction)
-    {
-        //
     }
 }

@@ -15,6 +15,7 @@ class Account extends Model
     protected $guarded = [];
 
     protected $fillable = [
+        'user_id',
         'balance',
         'account_number',
         'currency',

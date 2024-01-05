@@ -24,9 +24,7 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
             <div class="flex justify-end items-center mr-4">
-                <!-- Responsive Settings Options (for smaller screens) -->
                 <div class="sm:hidden">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -38,7 +36,6 @@
                     </form>
                 </div>
 
-                <!-- Settings Dropdown (for larger screens) -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

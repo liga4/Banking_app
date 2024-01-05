@@ -10,7 +10,7 @@ class CreateCurrencyExchangeRatesTable extends Migration
     {
         Schema::create('Currency_exchange_rates', function (Blueprint $table) {
             $table->id();
-            $table->string('currency');
+            $table->string('currency')->primary();
             $table->decimal('exchange_rate', 10, 6);
             $table->timestamps();
         });

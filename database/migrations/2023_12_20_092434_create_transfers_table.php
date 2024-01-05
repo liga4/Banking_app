@@ -14,12 +14,9 @@ class CreateTransfersTable extends Migration
             $table->foreign('sender_id')->references('id')->on('users');
             $table->unsignedBigInteger('sender_account_id');
             $table->foreign('sender_account_id')->references('id')->on('accounts');
-            $table->unsignedBigInteger('receiver_id');
-            $table->foreign('receiver_id')->references('id')->on('users');
-            $table->unsignedBigInteger('receiver_account_id');
-            $table->foreign('receiver_account_id')->references('id')->on('accounts');
+            $table->unsignedBigInteger('recipient_account_id');
+            $table->foreign('recipient_account_id')->references('id')->on('accounts');
             $table->string('reference')->index('transfer_reference_index');
-            $table->string('status');
             $table->decimal('amount', 16, 4);
             $table->softDeletes();
             $table->timestamps();

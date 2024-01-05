@@ -8,6 +8,7 @@ class ModifyExchangeRatesColumn extends Migration
 {
     public function up():void
     {
-        DB::statement("ALTER TABLE currency_exchange_rates MODIFY COLUMN exchange_rate DECIMAL(16, 10)");
+        DB::statement("ALTER TABLE currency_exchange_rates MODIFY COLUMN exchange_rate DECIMAL(16, 6)");
     }
+
 }

@@ -12,8 +12,10 @@ class CreateAccountsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('account_number')->unique();
-            $table->decimal('balance', 16, 2)->default(0);
+            $table->string('account_number')->unique()->nullable();
+            $table->integer('balance')->default(0);
+            $table->string('currency');
+            $table->string('account_type')->default('Checking_account');
             $table->softDeletes();
             $table->timestamps();
         });

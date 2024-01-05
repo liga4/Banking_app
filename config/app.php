@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'currency_api_key' => env('CURRENCY_API_KEY'),
     /*
     |--------------------------------------------------------------------------
     | Application Name

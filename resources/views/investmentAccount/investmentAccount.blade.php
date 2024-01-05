@@ -40,39 +40,36 @@
             </div>
         @endforeach
     </div>
-    @if(isset($ownedCrypto))
-        <h3 class="font-semibold text-xl text-gray-800 leading-tight" style="margin-left: 19%;">
-            {{ __('You own:') }}
-        </h3>
-        <div class="flex justify-center">
-            @foreach ($ownedCrypto as $crypto)
-                <div class="m-4">
-                    <table class="border border-b-blue-500">
-                        <tr>
-                            <td colspan="2" class="p-2 text-center font-bold bg-gray-100">{{ $crypto->currency}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="p-2 text-center">
-                                <div class="flex justify-center">
-                                    <img src="{{ $logo[$crypto->currency] }}" alt="{{ $crypto->currency }} Logo"
-                                         width="200"
-                                         height="200">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="p-2">Amount:</td>
+    <h3 class="font-semibold text-xl text-gray-800 leading-tight" style="margin-left: 19%;">
+        {{ __('You own:') }}
+    </h3>
+    <div class="flex justify-center">
+        @foreach ($ownedCrypto as $crypto)
+            <div class="m-4">
+                <table class="border ">
+                    <tr>
+                        <td colspan="2" class="p-2 text-center font-bold bg-gray-100">{{ $crypto->currency}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="p-2 text-center">
+                            <div class="flex justify-center">
+                                <img src="{{ $logo[$crypto->currency] }}" alt="{{ $crypto->currency }} Logo" width="200"
+                                     height="200">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2">Amount:</td>
 
-                            <td class="p-2">{{ $crypto->balance }}</td>
-                        </tr>
-                    </table>
-                </div>
-            @endforeach
-        </div>
-    @endif
-    <h4 class="font-semibold text-xl text-gray-800 leading-tight" style="margin-left: 19%;">
+                        <td class="p-2">{{ $crypto->balance }}</td>
+                    </tr>
+                </table>
+            </div>
+        @endforeach
+    </div>
+    <h3 class="font-semibold text-xl text-gray-800 leading-tight" style="margin-left: 19%;">
         {{ __('Crypto History') }}
-    </h4>
+    </h3>
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 ">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

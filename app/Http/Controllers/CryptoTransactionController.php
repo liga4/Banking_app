@@ -54,7 +54,8 @@ class CryptoTransactionController extends Controller
             'category' => 'bought',
             'boughtFor' => $request->amount
         ]);
-        $balanceExists = CryptoBalance::where('currency', $request->input('name'))->first();
+        $balanceExists = CryptoBalance::where('user_id', auth()->user()['id'])
+            ->where('currency', $request->input('name'))->first();
         if ($balanceExists) {
             $newBalance = (int)$balanceExists->balance + $amount;
             $balanceExists->update([

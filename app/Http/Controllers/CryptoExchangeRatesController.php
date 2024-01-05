@@ -68,16 +68,13 @@ class CryptoExchangeRatesController extends Controller
             }
         }
         $ownedCrypto = CryptoBalance::where('user_id', auth()->user()['id'])->get();
-        $owned = [];
-        foreach($ownedCrypto as $crypto){
-            $owned[] = $crypto;
-        }
+
 
         return view('investmentAccount.investmentAccount', [
             'currencies' => $currencies,
             'transactions' => $transactions,
             'transactionDetails' => $transactionDetails,
-            'ownedCrypto' => $owned,
+            'ownedCrypto' => $ownedCrypto,
             'logo' => $logo
         ]);
     }

@@ -45,7 +45,7 @@
 
 
             <div>
-                <x-button class="ml-3">
+                <x-button class="ml-3 justify-end">
                     {{ __('Log in') }}
                 </x-button>
             </div>

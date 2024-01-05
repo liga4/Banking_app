@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CryptoBalance;
 use App\Models\CryptoExchangeRates;
 use App\Models\CryptoTransactions;
 use Illuminate\Http\Request;
@@ -64,13 +65,20 @@ class CryptoExchangeRatesController extends Controller
                     $percentage = number_format($percentageChange, 2) . '%';
                 }
                 $transactionDetails[] = ['currency' => $currency, 'amount' => $amount, 'percentage' => $percentage];
-
             }
         }
+        $ownedCrypto = CryptoBalance::where('user_id', auth()->user()['id'])->get();
+        $owned = [];
+        foreach($ownedCrypto as $crypto){
+            $owned[] = $crypto;
+        }
+
         return view('investmentAccount.investmentAccount', [
             'currencies' => $currencies,
             'transactions' => $transactions,
-            'transactionDetails' => $transactionDetails
+            'transactionDetails' => $transactionDetails,
+            'ownedCrypto' => $owned,
+            'logo' => $logo
         ]);
     }
 

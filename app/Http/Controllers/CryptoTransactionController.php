@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CryptoBalance;
 use App\Models\CryptoExchangeRates;
 use App\Models\CryptoTransactions;
 use App\Rules\ValidateAmount;
@@ -53,7 +54,19 @@ class CryptoTransactionController extends Controller
             'category' => 'bought',
             'boughtFor' => $request->amount
         ]);
-
+        $balanceExists = CryptoBalance::where('currency', $request->input('name'))->first();
+        if ($balanceExists) {
+            $newBalance = (int)$balanceExists->balance + $amount;
+            $balanceExists->update([
+                'balance' => $newBalance
+            ]);
+        } else {
+            CryptoBalance::create([
+                'user_id' => auth()->user()['id'],
+                'currency' => $request->input('name'),
+                'balance' => $amount
+            ]);
+        }
         return redirect('investmentAccount');
     }
 }

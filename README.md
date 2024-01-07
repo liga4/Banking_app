@@ -1,6 +1,6 @@
 # Banking App
 
-Welcome to the Banking App! This application provides a range of financial functionalities to manage your accounts, perform transactions, and handle investments. It's built to offer a seamless experience for handling various currencies, making transactions, and exploring cryptocurrency investments.
+This application provides a range of financial functionalities to manage your accounts, perform transactions, and handle investments. It's built to offer a seamless experience for handling various currencies, making transactions, and exploring cryptocurrency investments.
 
 ## Features
 
